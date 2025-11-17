@@ -511,7 +511,8 @@ async def on_ready():
     print('Система логирования активна!')
 
 # ВСТАВЬТЕ ВАШ ТОКЕН БОТА ЗДЕСЬ ↓
-BOT_TOKEN = "MTMzMzM1MDY4NTQxMjAzNjYzOA.GP2wXi.g4ylhuW3c21eSFd0at4CmGqMkvHpyf1W0HELA0"
+# СЮДА НУЖНО ВСТАВИТЬ НОВЫЙ ТОКЕН
+BOT_TOKEN = "MTMzMzM1MDY4NTQxMjAzNjYzOA.GeAz98.qoCrlxEyhdSWOiNPhuItFScvnz8YIuykdzWCjs"
 
 if __name__ == "__main__":
     if BOT_TOKEN == "ВАШ_ТОКЕН_БОТА_ЗДЕСЬ":
