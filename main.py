@@ -46,7 +46,7 @@ class ReportCreateModal(Modal, title=Создать репорт)
     async def on_submit(self, interaction discord.Interaction)
         report_id = freport-{int(datetime.utcnow().timestamp())}
 
-        embed = discord.Embed(title=🚨 Новый репорт,
+        embed = discord.Embed(title="🚨 Новый репорт",
                               description=self.description.value,
                               color=discord.Color.red(),
                               timestamp=datetime.utcnow())
