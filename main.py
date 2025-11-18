@@ -1721,11 +1721,14 @@ async def say(ctx, *, message):
     await ctx.send(message)
 
 
-if __name__ == "__main__":
-    token = os.getenv("MTMzMzM1MDY4NTQxMjAzNjYzOA.GvgwY8.hbcyM4P0uoVc0mwZDopD_dCzPjS3FZlogC0loY")
-    if not token:
-        print("❌ ОШИБКА: Не найден DISCORD_BOT_TOKEN в переменных окружения!")
-        print("Пожалуйста, добавьте токен Discord бота в Secrets.")
-        exit(1)
+# ВСТАВЬТЕ ВАШ ТОКЕН БОТА ЗДЕСЬ ↓
+BOT_TOKEN = "MTMzMzM1MDY4NTQxMjAzNjYzOA.GP2wXi.g4ylhuW3c21eSFd0at4CmGqMkvHpyf1W0HELA0"
 
-    bot.run(token)
+if __name__ == "__main__":
+    if BOT_TOKEN == "ВАШ_ТОКЕН_БОТА_ЗДЕСЬ":
+        print("❌ ОШИБКА: Вставьте ваш токен бота в переменную BOT_TOKEN!")
+        print("Замените 'ВАШ_ТОКЕН_БОТА_ЗДЕСЬ' на реальный токен вашего бота Discord")
+        exit(1)
+    
+    bot.run(BOT_TOKEN)
+
