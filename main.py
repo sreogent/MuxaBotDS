@@ -1722,9 +1722,7 @@ async def say(ctx, , message)
 
 
 if __name__ == __main__
-    token = os.getenv(
-        "MTMzMzM1MDY4NTQxMjAzNjYzOA.GvgwY8.hbcyM4P0uoVc0mwZDopD_dCzPjS3FZlogC0loY"
-    )  # Corrected line
+    token = os.getenv("MTMzMzM1MDY4NTQxMjAzNjYzOA.GvgwY8.hbcyM4P0uoVc0mwZDopD_dCzPjS3FZlogC0loY")  # Corrected line
     if not token
         print(❌ ОШИБКА Не найден DISCORD_BOT_TOKEN в переменных окружения!)
         print(Пожалуйста, добавьте токен Discord бота в Secrets.)
