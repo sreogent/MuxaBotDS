@@ -515,7 +515,7 @@ async def on_ready():
 BOT_TOKEN = "MTMzMzM1MDY4NTQxMjAzNjYzOA.GeAz98.qoCrlxEyhdSWOiNPhuItFScvnz8YIuykdzWCjs"
 
 if __name__ == "__main__":
-    if BOT_TOKEN == "ВАШ_ТОКЕН_БОТА_ЗДЕСЬ":
+    if BOT_TOKEN == "MTMzMzM1MDY4NTQxMjAzNjYzOA.GeAz98.qoCrlxEyhdSWOiNPhuItFScvnz8YIuykdzWCjs":
         print("❌ ОШИБКА: Вставьте ваш токен бота в переменную BOT_TOKEN!")
         print("Замените 'ВАШ_ТОКЕН_БОТА_ЗДЕСЬ' на реальный токен вашего бота Discord")
         exit(1)
