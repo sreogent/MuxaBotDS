@@ -4,10 +4,6 @@ from discord.ui import View, Button, Modal, TextInput, Select
 import asyncio
 from datetime import datetime, timedelta
 import os
-from dotenv import load_dotenv
-
-# Загружаем переменные окружения
-load_dotenv()
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -1721,14 +1717,8 @@ async def say(ctx, *, message):
     await ctx.send(message)
 
 
-# ВСТАВЬТЕ ВАШ ТОКЕН БОТА ЗДЕСЬ ↓
-BOT_TOKEN = "MTMzMzM1MDY4NTQxMjAzNjYzOA.GP2wXi.g4ylhuW3c21eSFd0at4CmGqMkvHpyf1W0HELA0"
-
 if __name__ == "__main__":
-    if BOT_TOKEN == "ВАШ_ТОКЕН_БОТА_ЗДЕСЬ":
-        print("❌ ОШИБКА: Вставьте ваш токен бота в переменную BOT_TOKEN!")
-        print("Замените 'ВАШ_ТОКЕН_БОТА_ЗДЕСЬ' на реальный токен вашего бота Discord")
-        exit(1)
+    # ВСТАВЬТЕ ВАШ ТОКЕН СЮДА
+    TOKEN = "MTMzMzM1MDY4NTQxMjAzNjYzOA.GvgwY8.hbcyM4P0uoVc0mwZDopD_dCzPjS3FZlogC0loY"
     
-    bot.run(BOT_TOKEN)
-
+    bot.run(TOKEN)
