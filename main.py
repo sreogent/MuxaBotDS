@@ -511,7 +511,7 @@ async def on_ready():
     print('Система логирования активна!')
 
 # ВСТАВЬТЕ ВАШ ТОКЕН БОТА ЗДЕСЬ ↓
-BOT_TOKEN = "import discord
+BOT_TOKEN = import discord
 from discord.ext import commands, tasks
 from discord.ui import View, Button, Modal, TextInput, Select
 import asyncio
