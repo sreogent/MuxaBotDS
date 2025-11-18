@@ -81,7 +81,7 @@ class ReportActionView(View)
     async def accept_report(self, interaction discord.Interaction,
                             button Button)
         embed = discord.Embed(
-            title=✅ Репорт принят,
+            title="✅ Репорт принят",
             description=
             fРепорт {self.report_id} принят модератором {interaction.user.mention},
             color=discord.Color.green())
@@ -99,7 +99,7 @@ class ReportActionView(View)
     async def decline_report(self, interaction discord.Interaction,
                              button Button)
         embed = discord.Embed(
-            title=❌ Репорт отклонён,
+            title="❌ Репорт отклонён",
             description=
             fРепорт {self.report_id} отклонён модератором {interaction.user.mention},
             color=discord.Color.red())
@@ -149,14 +149,14 @@ class RoleSelect(Select)
     async def callback(self, interaction discord.Interaction)
         if self.values[0] == none
             await interaction.response.send_message(
-                ❌ На сервере нет доступных ролей для выдачи., ephemeral=True)
+                "❌ На сервере нет доступных ролей для выдачи.", ephemeral=True)
             return
 
         role_id = int(self.values[0])
         role = interaction.guild.get_role(role_id)
 
         if not role
-            await interaction.response.send_message(❌ Роль не найдена.,
+            await interaction.response.send_message("❌ Роль не найдена.",
                                                     ephemeral=True)
             return
 
@@ -223,7 +223,7 @@ class UserInputModal(Modal, title=Выдача роли)
         try
             await member.add_roles(self.role)
             embed = discord.Embed(
-                title=✅ Роль выдана,
+                title="✅ Роль выдана",
                 description=
                 fРоль `{self.role.name}` выдана пользователю {member.mention},
                 color=discord.Color.green())
@@ -354,7 +354,7 @@ class CreateObzvonModal(Modal, title=Создание обзвона)
                                                category=category,
                                                overwrites=overwrites)
 
-        text_channel = await guild.create_text_channel(📋 настройки обзвона,
+        text_channel = await guild.create_text_channel("📋 настройки обзвона",
                                                        category=category)
         await text_channel.send(view=ObzvonControlView(
             role_wait, role_call, role_end, [ch1, ch2, ch3], category))
@@ -422,7 +422,7 @@ class MoveSelect(Select)
                 f🔄 {interaction.user.mention} переместил {member.mention} в {self.channel.name}
             )
         else
-            await interaction.response.send_message(⛔ Участник не найден,
+            await interaction.response.send_message("⛔ Участник не найден",
                                                     ephemeral=True)
 
 
@@ -510,7 +510,7 @@ class ReportActionButtonsView(View)
             return
 
         embed = discord.Embed(
-            title=✅ Жалоба одобрена,
+            title="✅ Жалоба одобрена",
             description=
             fЖалоба на {self.target.mention} одобрена модератором {interaction.user.mention},
             color=discord.Color.green(),
@@ -540,7 +540,7 @@ class ReportActionButtonsView(View)
             return
 
         embed = discord.Embed(
-            title=❌ Жалоба отклонена,
+            title="❌ Жалоба отклонена",
             description=
             fЖалоба на {self.target.mention} отклонена модератором {interaction.user.mention},
             color=discord.Color.red(),
@@ -576,7 +576,7 @@ class ReportModal(Modal, title=Жалоба на участника)
             timestamp datetime.utcnow()
         }
 
-        embed = discord.Embed(title=🚨 Новая жалоба,
+        embed = discord.Embed(title="🚨 Новая жалоба",
                               color=discord.Color.red(),
                               timestamp=datetime.utcnow())
         embed.add_field(name=На пользователя,
