@@ -77,7 +77,7 @@ class ReportActionView(View)
 
     @discord.ui.button(label=Принять,
                        style=discord.ButtonStyle.success,
-                       emoji=✅)
+                       emoji="✅")
     async def accept_report(self, interaction discord.Interaction,
                             button Button)
         embed = discord.Embed(
@@ -501,7 +501,7 @@ class ReportActionButtonsView(View)
 
     @discord.ui.button(label=Одобрить,
                        style=discord.ButtonStyle.success,
-                       emoji=✅)
+                       emoji="✅")
     async def approve_report(self, interaction discord.Interaction,
                              button Button)
         if not interaction.user.guild_permissions.moderate_members
@@ -531,7 +531,7 @@ class ReportActionButtonsView(View)
 
     @discord.ui.button(label=Отклонить,
                        style=discord.ButtonStyle.danger,
-                       emoji=❌)
+                       emoji="❌")
     async def decline_report(self, interaction discord.Interaction,
                              button Button)
         if not interaction.user.guild_permissions.moderate_members
@@ -576,7 +576,7 @@ class ReportModal(Modal, title=Жалоба на участника)
             timestamp datetime.utcnow()
         }
 
-        embed = discord.Embed(title="🚨 Новая жалоба",
+        embed = discord.Embed(title="🚨Новая жалоба",
                               color=discord.Color.red(),
                               timestamp=datetime.utcnow())
         embed.add_field(name=На пользователя,
@@ -634,7 +634,7 @@ async def warn(interaction discord.Interaction,
     user_warnings[member.id] += 1
     warnings_count = user_warnings[member.id]
 
-    embed = discord.Embed(title=⚠️ Предупреждение,
+    embed = discord.Embed(title="⚠️ Предупреждение",
                           color=discord.Color.orange())
     embed.add_field(name=Участник, value=member.mention)
     embed.add_field(name=Модератор, value=interaction.user.mention)
@@ -682,7 +682,7 @@ async def remove_warn(interaction discord.Interaction,
     user_warnings[member.id] -= 1
     warnings_count = user_warnings[member.id]
 
-    embed = discord.Embed(title=✅ Предупреждение снято,
+    embed = discord.Embed(title="✅ Предупреждение снято",
                           color=discord.Color.green())
     embed.add_field(name=Участник, value=member.mention)
     embed.add_field(name=Модератор, value=interaction.user.mention)
@@ -703,7 +703,7 @@ async def kick(interaction discord.Interaction,
                reason str = Не указана)
     try
         await member.kick(reason=reason)
-        embed = discord.Embed(title=👟 Участник исключён,
+        embed = discord.Embed(title="👟 Участник исключён",
                               color=discord.Color.orange())
         embed.add_field(name=Участник, value=member.mention)
         embed.add_field(name=Модератор, value=interaction.user.mention)
@@ -728,7 +728,7 @@ async def ban(interaction discord.Interaction,
         await member.ban(reason=reason)
         if member.id in user_warnings
             user_warnings[member.id] = 0
-        embed = discord.Embed(title=🔨 Участник заблокирован,
+        embed = discord.Embed(title="🔨 Участник заблокирован",
                               color=discord.Color.red())
         embed.add_field(name=Участник, value=member.mention)
         embed.add_field(name=Модератор, value=interaction.user.mention)
