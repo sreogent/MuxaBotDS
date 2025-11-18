@@ -64,7 +64,7 @@ class ReportCreateModal(Modal, title=Создать репорт)
             await report_channel.send(embed=embed, view=view)
 
         await interaction.response.send_message(
-            ✅ Репорт отправлен модераторам!, ephemeral=True)
+            "✅ Репорт отправлен модераторам!", ephemeral=True)
 
 
 class ReportActionView(View)
