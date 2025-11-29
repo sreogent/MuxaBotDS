@@ -1,7 +1,8 @@
-from discord.ui import View, Button, Modal, Select
-from discord import TextStyle
-from discord.ui import InputText as TextInput
-
+import discord
+from discord.ext import commands, tasks
+from discord.ui import View, Button, Modal, Select, TextInput
+from datetime import datetime, timedelta
+import asyncio
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -32,14 +33,17 @@ AVAILABLE_ROLES = [
 ]
 
 
-class ReportCreateModal(Modal, title="Создать репорт"):
-    description = TextInput(label="Описание проблемы",
-                            style=discord.TextStyle.paragraph,
-                            placeholder="Опишите детально что произошло...")
-
+class ReportCreateModal(Modal):
     def __init__(self, channel):
-        super().__init__()
+        super().__init__(title="Создать репорт")
         self.channel = channel
+        self.description = TextInput(
+            label="Описание проблемы",
+            style=discord.TextStyle.paragraph,
+            placeholder="Опишите детально что произошло...",
+            required=True
+        )
+        self.add_item(self.description)
 
     async def on_submit(self, interaction: discord.Interaction):
         report_id = f"report-{int(datetime.utcnow().timestamp())}"
@@ -66,7 +70,6 @@ class ReportCreateModal(Modal, title="Создать репорт"):
 
 
 class ReportActionView(View):
-
     def __init__(self, report_id, author, channel):
         super().__init__(timeout=None)
         self.report_id = report_id
@@ -111,14 +114,12 @@ class ReportActionView(View):
 
 
 class RoleSelectView(View):
-
     def __init__(self, guild):
         super().__init__(timeout=30)
         self.add_item(RoleSelect(guild))
 
 
 class RoleSelect(Select):
-
     def __init__(self, guild):
         # Получаем все роли сервера, кроме @everyone и ботовских
         server_roles = [
@@ -165,7 +166,6 @@ class RoleSelect(Select):
 
 
 class UserSelectView(View):
-
     def __init__(self, role):
         super().__init__(timeout=30)
         self.role = role
@@ -173,7 +173,6 @@ class UserSelectView(View):
 
 
 class UserSelect(Select):
-
     def __init__(self, role):
         # Создаем простые опции для примера
         options = [
@@ -191,13 +190,16 @@ class UserSelect(Select):
         await interaction.response.send_modal(UserInputModal(self.role))
 
 
-class UserInputModal(Modal, title="Выдача роли"):
-    user_input = TextInput(label="ID или упоминание пользователя",
-                           placeholder="123456789012345678 или @username")
-
+class UserInputModal(Modal):
     def __init__(self, role):
-        super().__init__()
+        super().__init__(title="Выдача роли")
         self.role = role
+        self.user_input = TextInput(
+            label="ID или упоминание пользователя",
+            placeholder="123456789012345678 или @username",
+            required=True
+        )
+        self.add_item(self.user_input)
 
     async def on_submit(self, interaction: discord.Interaction):
         user_str = self.user_input.value.strip()
@@ -317,8 +319,15 @@ async def create_bot_call(interaction: discord.Interaction):
     await interaction.response.send_message(embed=embed, view=view)
 
 
-class CreateObzvonModal(Modal, title="Создание обзвона"):
-    name = TextInput(label="Название обзвона", placeholder="Например Лидеры")
+class CreateObzvonModal(Modal):
+    def __init__(self):
+        super().__init__(title="Создание обзвона")
+        self.name = TextInput(
+            label="Название обзвона", 
+            placeholder="Например Лидеры",
+            required=True
+        )
+        self.add_item(self.name)
 
     async def on_submit(self, interaction: discord.Interaction):
         name = self.name.value
@@ -374,7 +383,6 @@ class CreateObzvonModal(Modal, title="Создание обзвона"):
 
 
 class CreateObzvonView(View):
-
     @discord.ui.button(label="Создать обзвон", style=discord.ButtonStyle.green)
     async def create_obzvon(self, interaction: discord.Interaction,
                             button: Button):
@@ -382,14 +390,12 @@ class CreateObzvonView(View):
 
 
 class MoveSelectView(View):
-
     def __init__(self, members, role, channel):
         super().__init__(timeout=30)
         self.add_item(MoveSelect(members, role, channel))
 
 
 class MoveSelect(Select):
-
     def __init__(self, members, role, channel):
         options = [
             discord.SelectOption(label=member.display_name,
@@ -424,7 +430,6 @@ class MoveSelect(Select):
 
 
 class ObzvonControlView(View):
-
     def __init__(self, role_wait, role_call, role_end, voice_channels,
                  category):
         super().__init__(timeout=None)
@@ -489,7 +494,6 @@ class ObzvonControlView(View):
 
 
 class ReportActionButtonsView(View):
-
     def __init__(self, report_id, target, reporter):
         super().__init__(timeout=None)
         self.report_id = report_id
@@ -557,12 +561,16 @@ class ReportActionButtonsView(View):
         )
 
 
-class ReportModal(Modal, title="Жалоба на участника"):
-    reason = TextInput(label="Причина", style=discord.TextStyle.paragraph)
-
+class ReportModal(Modal):
     def __init__(self, target):
-        super().__init__()
+        super().__init__(title="Жалоба на участника")
         self.target = target
+        self.reason = TextInput(
+            label="Причина", 
+            style=discord.TextStyle.paragraph,
+            required=True
+        )
+        self.add_item(self.reason)
 
     async def on_submit(self, interaction: discord.Interaction):
         report_id = f"{interaction.guild_id}-{interaction.user.id}-{int(datetime.utcnow().timestamp())}"
@@ -829,7 +837,6 @@ async def create_call(interaction: discord.Interaction):
 
 
 class VerificationView(View):
-
     def __init__(self, verification_roles=None):
         super().__init__(timeout=None)
         self.verification_roles = verification_roles or []
@@ -886,7 +893,6 @@ class VerificationView(View):
 
 
 class VerificationRoleSelectView(View):
-
     def __init__(self, role_ids, guild):
         super().__init__(timeout=60)
         self.role_ids = role_ids
@@ -894,7 +900,6 @@ class VerificationRoleSelectView(View):
 
 
 class VerificationRoleSelect(Select):
-
     def __init__(self, role_ids, guild):
         options = []
         for role_id in role_ids[:25]:
@@ -948,7 +953,6 @@ class VerificationRoleSelect(Select):
 
 
 class ComplaintView(View):
-
     def __init__(self):
         super().__init__(timeout=None)
 
@@ -960,17 +964,30 @@ class ComplaintView(View):
         await interaction.response.send_modal(ComplaintModal())
 
 
-class ComplaintModal(Modal, title="Подача жалобы"):
-    target_user = TextInput(label="На кого жалоба (ID или @упоминание)",
-                            placeholder="123456789 или @username")
-    reason = TextInput(label="Причина жалобы",
-                       style=discord.TextStyle.paragraph,
-                       placeholder="Опишите подробно причину жалобы...")
-    evidence = TextInput(
-        label="Доказательства (ссылки на скриншоты)",
-        style=discord.TextStyle.paragraph,
-        required=False,
-        placeholder="Ссылки на изображения или дополнительная информация")
+class ComplaintModal(Modal):
+    def __init__(self):
+        super().__init__(title="Подача жалобы")
+        self.target_user = TextInput(
+            label="На кого жалоба (ID или @упоминание)",
+            placeholder="123456789 или @username",
+            required=True
+        )
+        self.reason = TextInput(
+            label="Причина жалобы",
+            style=discord.TextStyle.paragraph,
+            placeholder="Опишите подробно причину жалобы...",
+            required=True
+        )
+        self.evidence = TextInput(
+            label="Доказательства (ссылки на скриншоты)",
+            style=discord.TextStyle.paragraph,
+            required=False,
+            placeholder="Ссылки на изображения или дополнительная информация"
+        )
+        
+        self.add_item(self.target_user)
+        self.add_item(self.reason)
+        self.add_item(self.evidence)
 
     async def on_submit(self, interaction: discord.Interaction):
         # Пытаемся найти пользователя
@@ -1088,18 +1105,20 @@ class ComplaintModal(Modal, title="Подача жалобы"):
                 ephemeral=True)
 
 
-class ComplaintResponseModal(Modal, title="Ответ на жалобу"):
-    response_text = TextInput(label="Ваш ответ",
-                              style=discord.TextStyle.paragraph,
-                              placeholder="Напишите свой ответ по жалобе...",
-                              required=True,
-                              max_length=2000)
-
+class ComplaintResponseModal(Modal):
     def __init__(self, channel, reporter, moderator):
-        super().__init__()
+        super().__init__(title="Ответ на жалобу")
         self.channel = channel
         self.reporter = reporter
         self.moderator = moderator
+        self.response_text = TextInput(
+            label="Ваш ответ",
+            style=discord.TextStyle.paragraph,
+            placeholder="Напишите свой ответ по жалобе...",
+            required=True,
+            max_length=2000
+        )
+        self.add_item(self.response_text)
 
     async def on_submit(self, interaction: discord.Interaction):
         # Создаем embed для ответа
@@ -1134,7 +1153,6 @@ class ComplaintResponseModal(Modal, title="Ответ на жалобу"):
 
 
 class ComplaintReviewView(View):
-
     def __init__(self, report_id, target, reporter, channel):
         super().__init__(timeout=None)
         self.report_id = report_id
@@ -1524,15 +1542,17 @@ async def setup_verification(interaction: discord.Interaction,
     )
 
 
-class MultiVerificationSetupModal(Modal, title="Настройка мультиверификации"):
-    role_ids_input = TextInput(label="ID ролей (через запятую)",
-                               placeholder="123456789,987654321,111222333",
-                               style=discord.TextStyle.paragraph,
-                               required=True)
-
+class MultiVerificationSetupModal(Modal):
     def __init__(self, channel):
-        super().__init__()
+        super().__init__(title="Настройка мультиверификации")
         self.channel = channel
+        self.role_ids_input = TextInput(
+            label="ID ролей (через запятую)",
+            placeholder="123456789,987654321,111222333",
+            style=discord.TextStyle.paragraph,
+            required=True
+        )
+        self.add_item(self.role_ids_input)
 
     async def on_submit(self, interaction: discord.Interaction):
         try:
@@ -1717,6 +1737,6 @@ async def say(ctx, *, message):
 
 if __name__ == "__main__":
     # ВСТАВЬТЕ ВАШ ТОКЕН СЮДА
-    TOKEN = "MTMzMzM1MDY4NTQxMjAzNjYzOA.GvgwY8.hbcyM4P0uoVc0mwZDopD_dCzPjS3FZlogC0loY"
+    TOKEN = "YMTMzMzM1MDY4NTQxMjAzNjYzOA.G_qKSB.rZ6EuRxg3Tc_EjmI6nTNeS1fBz4Q1lwr3xAdPc"
     
     bot.run(TOKEN)
