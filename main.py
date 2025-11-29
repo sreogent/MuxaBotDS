@@ -1,9 +1,7 @@
-import discord
-from discord.ext import commands, tasks
-from discord.ui import View, Button, Modal, TextInput, Select
-import asyncio
-from datetime import datetime, timedelta
-import os
+from discord.ui import View, Button, Modal, Select
+from discord import TextStyle
+from discord.ui import InputText as TextInput
+
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
